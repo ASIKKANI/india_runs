@@ -1,0 +1,77 @@
+# Redrob Hackathon — Submission Metadata
+#
+# Copied from submission_metadata_template.yaml and filled in.
+
+# ============================================================================
+# Team identity
+# ============================================================================
+team_name: "Antigravity Rankers"  # Used in leaderboard and announcements
+
+primary_contact:
+  name: "Asikk"
+  email: "asikk@example.com"      # Fill this with your email
+  phone: "+91-XXXXXXXXXX"         # Fill this with your phone number
+
+team_members:
+  - name: "Asikk"
+    email: "asikk@example.com"
+    role: "ML Engineer"
+  # Add other members if participating in a team
+
+# ============================================================================
+# Code and reproducibility
+# ============================================================================
+github_repo: "https://github.com/asikk/india_runs"
+# Private repo link is fine. We will grant access to organizers when requested at Stage 3.
+
+sandbox_link: "https://huggingface.co/spaces/asikk/redrob-candidate-ranker"
+# The working hosted environment sandbox
+
+reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
+# The single command that produces submission.csv from candidates.jsonl.
+# Will complete within 5 minutes on CPU with 16GB RAM and no network.
+
+# ============================================================================
+# Compute environment
+# ============================================================================
+compute:
+  platform: "Local PC"                          # Description of where code ran
+  cpu_cores: 8                                  # Number of CPU cores used
+  ram_gb: 16                                    # Available RAM in GB
+  python_version: "3.11"                        # python --version
+  os: "Windows 11"                              # Operating system
+  uses_gpu_for_inference: false                 # Must be false
+  has_network_during_ranking: false             # Must be false
+  pre_computation_required: true                # true since we pre-compute embeddings and honeypot flags
+  pre_computation_time_minutes: 5               # Approximate time to precompute 100K profiles on CPU/GPU
+
+# ============================================================================
+# AI tools declaration
+# ============================================================================
+ai_tools_used:
+  - "Claude"
+  - "Gemini"
+  - "Cursor"
+
+ai_usage_summary: |
+  Used Claude (via Antigravity AI) for designing the cascade architecture, honeypot detection rules, and structured code development.
+  No candidate data was uploaded or leaked to hosted LLM APIs during ranking.
+
+# ============================================================================
+# Approach summary
+# ============================================================================
+methodology_summary: |
+  Multi-stage Cascade Ranking Architecture (CRA).
+  First, precomputes semantic dense vector embeddings (using local BGE-small-en-v1.5) and checks for honeypots (impossible career dates, dual current jobs, experience mismatches) offline.
+  During ranking, computes semantic similarity against the Job Description on CPU, filters honeypots (forces score to 0), and applies heuristic multipliers for experience fit (5-9 years), target locations, tenure stability, notice periods, and platform activity.
+  Outputs the top 100 candidates with factual, dynamically compiled reasoning to avoid generic templating. Completed in under 5 seconds.
+
+# ============================================================================
+# Declarations
+# ============================================================================
+declarations:
+  read_submission_spec: true        # I have read submission_spec.md in full
+  code_is_original_work: true       # My code is my team's original work
+  no_collusion: true                # I have not coordinated my submission with other teams
+  honeypot_check_done: true         # Set true since we explicitly filter honeypots
+  reproduction_tested: true         # Set true once we test the reproduction command

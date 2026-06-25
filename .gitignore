@@ -1,0 +1,27 @@
+# Python virtual environments
+venv/
+.venv/
+env/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Streamlit temporary and config files
+.streamlit/
+
+# IDE files
+.vscode/
+.idea/
+
+# Large temporary datasets and model weights (generated via precompute.py)
+precomputed_data.pkl.gz
+models/
+India_runs_data_and_ai_challenge/candidates.jsonl
+
+
+# Scratch files
+scratch/
+test_team_123.csv
