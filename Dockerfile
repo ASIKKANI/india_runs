@@ -17,6 +17,7 @@ COPY models/ ./models/
 COPY precomputed_data.pkl.gz ./
 COPY rank.py ./
 COPY app.py ./
+COPY redrob_logo.png ./
 
 EXPOSE 8501
 

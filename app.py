@@ -195,7 +195,10 @@ def main():
     st.subheader("Interactive Cascade Ranking Engine Sandbox")
     
     # Sidebar
-    st.sidebar.image("https://redrob.com/images/redrob_logo.png", width=150)
+    if os.path.exists("redrob_logo.png"):
+        st.sidebar.image("redrob_logo.png", width=150)
+    else:
+        st.sidebar.title("Redrob AI")
     st.sidebar.header("📁 Data & Controls")
     
     # Upload file
