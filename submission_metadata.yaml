@@ -21,10 +21,11 @@ team_members:
 # ============================================================================
 # Code and reproducibility
 # ============================================================================
-github_repo: "https://github.com/asikk/india_runs"
+github_repo: "https://github.com/ASIKKANI/india_runs"
 # Private repo link is fine. We will grant access to organizers when requested at Stage 3.
 
-sandbox_link: "https://huggingface.co/spaces/asikk/redrob-candidate-ranker"
+sandbox_link: "https://huggingface.co/spaces/skyfallonme/redrob-candidate-ranker"
+
 # The working hosted environment sandbox
 
 reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
