@@ -87,7 +87,11 @@ def load_precomputed_cache():
     precomputed_cache_path = "./precomputed_data.pkl.gz"
     if os.path.exists(precomputed_cache_path):
         with gzip.open(precomputed_cache_path, "rb") as f:
-            return pickle.load(f)
+            data = pickle.load(f)
+            # Create a fast lookup map for candidate_id to index
+            if data and "candidate_ids" in data:
+                data["id_to_idx"] = {cid: idx for idx, cid in enumerate(data["candidate_ids"])}
+            return data
     return None
 
 def score_candidate(cand, query_emb, model, precomputed):
@@ -127,8 +131,8 @@ def score_candidate(cand, query_emb, model, precomputed):
         
     # Semantic Similarity lookup or compute
     similarity_score = 0.0
-    if precomputed and cid in precomputed["candidate_ids"]:
-        idx = precomputed["candidate_ids"].index(cid)
+    if precomputed and "id_to_idx" in precomputed and cid in precomputed["id_to_idx"]:
+        idx = precomputed["id_to_idx"][cid]
         cand_emb = precomputed["embeddings"][idx]
         similarity_score = float(np.dot(cand_emb, query_emb))
     else:
