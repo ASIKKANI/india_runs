@@ -5,18 +5,20 @@
 # ============================================================================
 # Team identity
 # ============================================================================
-team_name: "Antigravity Rankers"  # Used in leaderboard and announcements
+team_name: "radioheads" 
 
 primary_contact:
-  name: "Asikk"
-  email: "asikk@example.com"      # Fill this with your email
-  phone: "+91-XXXXXXXXXX"         # Fill this with your phone number
+  name: "P Asik kani"
+  email: "asikkani73@gmail.com"      
+  phone: "+91 8681980569"        
 
 team_members:
-  - name: "Asikk"
-    email: "asikk@example.com"
+  - name: "P Asik kani"
+    email: "asikkani73@gmail.com"
+    role: "team lead and ML Engineer"
+  - name: "Logesh R"
+    email: "logeshrv2006@gmail.com"
     role: "ML Engineer"
-  # Add other members if participating in a team
 
 # ============================================================================
 # Code and reproducibility
@@ -25,7 +27,6 @@ github_repo: "https://github.com/ASIKKANI/india_runs"
 # Private repo link is fine. We will grant access to organizers when requested at Stage 3.
 
 sandbox_link: "https://huggingface.co/spaces/skyfallonme/redrob-candidate-ranker"
-
 # The working hosted environment sandbox
 
 reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
