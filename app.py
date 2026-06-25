@@ -195,7 +195,7 @@ def main():
     st.subheader("Interactive Cascade Ranking Engine Sandbox")
     
     # Sidebar
-    st.sidebar.image("https://redrob.com/images/redrob_logo.png", width=150, error_bad_url="ignore")
+    st.sidebar.image("https://redrob.com/images/redrob_logo.png", width=150)
     st.sidebar.header("📁 Data & Controls")
     
     # Upload file
