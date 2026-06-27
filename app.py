@@ -827,91 +827,80 @@ def main():
                 
                 col1, col2 = st.columns([1, 1])
                 with col1:
-                    st.markdown(textwrap.dedent(f"""
-                    <div class="info-card">
-                        <h3 style="margin-top:0;">👤 {cand_info['profile']['anonymized_name']}</h3>
-                        <p style="font-size:1.15rem; font-style:italic; color:{text_muted}; margin-bottom: 1.25rem;">{cand_info['profile']['headline']}</p>
-                        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:1.5rem;">
-                            <span class="badge badge-green">💼 {cand_info['profile']['current_title']}</span>
-                            <span class="badge badge-blue">🏢 {cand_info['profile']['current_company']}</span>
-                            <span class="badge badge-gold">📍 {cand_info['profile']['location']}, {cand_info['profile']['country']}</span>
-                            <span class="badge badge-silver">📅 {cand_info['profile']['years_of_experience']} YoE</span>
-                        </div>
-                        
-                        <h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">💼 Career Experience</h4>
-                        {timeline_html}
-                        
-                        <h4 style="margin-top: 2rem; margin-bottom: 0.75rem;">⚙️ Core Skills</h4>
-                        <div style="display:flex; flex-wrap:wrap;">
-                            {skills_html}
-                        </div>
-                    </div>
-                    """), unsafe_allow_html=True)
+                    st.markdown(f"""<div class="info-card">
+<h3 style="margin-top:0;">👤 {cand_info['profile']['anonymized_name']}</h3>
+<p style="font-size:1.15rem; font-style:italic; color:{text_muted}; margin-bottom: 1.25rem;">{cand_info['profile']['headline']}</p>
+<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:1.5rem;">
+<span class="badge badge-green">💼 {cand_info['profile']['current_title']}</span>
+<span class="badge badge-blue">🏢 {cand_info['profile']['current_company']}</span>
+<span class="badge badge-gold">📍 {cand_info['profile']['location']}, {cand_info['profile']['country']}</span>
+<span class="badge badge-silver">📅 {cand_info['profile']['years_of_experience']} YoE</span>
+</div>
+<h4 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">💼 Career Experience</h4>
+{timeline_html}
+<h4 style="margin-top: 2rem; margin-bottom: 0.75rem;">⚙️ Core Skills</h4>
+<div style="display:flex; flex-wrap:wrap;">
+{skills_html}
+</div>
+</div>""", unsafe_allow_html=True)
                     
                 with col2:
-                    st.markdown(textwrap.dedent(f"""
-                    <div class="info-card">
-                        <h3 style="margin-top:0;">⚡ Scoring Cascade Breakdown</h3>
-                        
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; background:{bg_subtle}; padding: 0.75rem 1.25rem; border-radius: 8px; border:1px solid {border_color};">
-                            <span style="font-size:1.05rem; font-weight:700; color:{text_color};">Cascade Match Score</span>
-                            <span class="candidate-score-badge" style="font-size:1.6rem; padding:4px 14px;">{cand_score_row['score']:.2f}</span>
-                        </div>
-                        
-                        <div class="explainer-row">
-                            <span class="explainer-label"><b>Base Semantic Similarity</b><br><small style="color:{text_dim};">Embeddings title & headline relevance</small></span>
-                            <span class="explainer-val">{cand_score_row['similarity']:.4f}</span>
-                        </div>
-                        <div class="explainer-row">
-                            <span class="explainer-label"><b>Experience Fit Multiplier</b><br><small style="color:{text_dim};">Optimal range: 5 to 9 years of experience</small></span>
-                            <span class="explainer-val">{get_mult_badge(cand_score_row['exp_mult'])}</span>
-                        </div>
-                        <div class="explainer-row">
-                            <span class="explainer-label"><b>Location Fit Multiplier</b><br><small style="color:{text_dim};">Noida/Pune location or relocation willingness</small></span>
-                            <span class="explainer-val">{get_mult_badge(cand_score_row['loc_mult'])}</span>
-                        </div>
-                        <div class="explainer-row">
-                            <span class="explainer-label"><b>Tenure Stability Multiplier</b><br><small style="color:{text_dim};">Avg job duration (catches frequent job-hopping)</small></span>
-                            <span class="explainer-val">{get_mult_badge(cand_score_row['tenure_mult'])}</span>
-                        </div>
-                        <div class="explainer-row">
-                            <span class="explainer-label"><b>Notice Period Multiplier</b><br><small style="color:{text_dim};">Notice period timeline (boost for immediate start)</small></span>
-                            <span class="explainer-val">{get_mult_badge(cand_score_row['notice_mult'])}</span>
-                        </div>
-                        <div class="explainer-row">
-                            <span class="explainer-label"><b>Active Platform Signals</b><br><small style="color:{text_dim};">Recruiter response rate & platform activity logs</small></span>
-                            <span class="explainer-val">{get_mult_badge(cand_score_row['behav_mult'])}</span>
-                        </div>
-                        <div class="explainer-row">
-                            <span class="explainer-label"><b>Service Only Penalty</b><br><small style="color:{text_dim};">Applies 0.1x penalty for pure IT outsourcing backgrounds</small></span>
-                            <span class="explainer-val">{get_mult_badge(cand_score_row['service_mult'])}</span>
-                        </div>
-                        <div class="explainer-row">
-                            <span class="explainer-label"><b>Computer Vision Bias Penalty</b><br><small style="color:{text_dim};">Applies 0.3x penalty for CV/speech heavy profiles</small></span>
-                            <span class="explainer-val">{get_mult_badge(cand_score_row['cv_mult'])}</span>
-                        </div>
-                        
-                        <h4 style="margin-top:2rem; margin-bottom:0.75rem;">🧠 AI Recruiter Reasoning</h4>
-                        <div class="reasoning-box">
-                            {cand_score_row['reasoning']}
-                        </div>
-                    </div>
-                    """), unsafe_allow_html=True)
+                    st.markdown(f"""<div class="info-card">
+<h3 style="margin-top:0;">⚡ Scoring Cascade Breakdown</h3>
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; background:{bg_subtle}; padding: 0.75rem 1.25rem; border-radius: 8px; border:1px solid {border_color};">
+<span style="font-size:1.05rem; font-weight:700; color:{text_color};">Cascade Match Score</span>
+<span class="candidate-score-badge" style="font-size:1.6rem; padding:4px 14px;">{cand_score_row['score']:.2f}</span>
+</div>
+<div class="explainer-row">
+<span class="explainer-label"><b>Base Semantic Similarity</b><br><small style="color:{text_dim};">Embeddings title & headline relevance</small></span>
+<span class="explainer-val">{cand_score_row['similarity']:.4f}</span>
+</div>
+<div class="explainer-row">
+<span class="explainer-label"><b>Experience Fit Multiplier</b><br><small style="color:{text_dim};">Optimal range: 5 to 9 years of experience</small></span>
+<span class="explainer-val">{get_mult_badge(cand_score_row['exp_mult'])}</span>
+</div>
+<div class="explainer-row">
+<span class="explainer-label"><b>Location Fit Multiplier</b><br><small style="color:{text_dim};">Noida/Pune location or relocation willingness</small></span>
+<span class="explainer-val">{get_mult_badge(cand_score_row['loc_mult'])}</span>
+</div>
+<div class="explainer-row">
+<span class="explainer-label"><b>Tenure Stability Multiplier</b><br><small style="color:{text_dim};">Avg job duration (catches frequent job-hopping)</small></span>
+<span class="explainer-val">{get_mult_badge(cand_score_row['tenure_mult'])}</span>
+</div>
+<div class="explainer-row">
+<span class="explainer-label"><b>Notice Period Multiplier</b><br><small style="color:{text_dim};">Notice period timeline (boost for immediate start)</small></span>
+<span class="explainer-val">{get_mult_badge(cand_score_row['notice_mult'])}</span>
+</div>
+<div class="explainer-row">
+<span class="explainer-label"><b>Active Platform Signals</b><br><small style="color:{text_dim};">Recruiter response rate & platform activity logs</small></span>
+<span class="explainer-val">{get_mult_badge(cand_score_row['behav_mult'])}</span>
+</div>
+<div class="explainer-row">
+<span class="explainer-label"><b>Service Only Penalty</b><br><small style="color:{text_dim};">Applies 0.1x penalty for pure IT outsourcing backgrounds</small></span>
+<span class="explainer-val">{get_mult_badge(cand_score_row['service_mult'])}</span>
+</div>
+<div class="explainer-row">
+<span class="explainer-label"><b>Computer Vision Bias Penalty</b><br><small style="color:{text_dim};">Applies 0.3x penalty for CV/speech heavy profiles</small></span>
+<span class="explainer-val">{get_mult_badge(cand_score_row['cv_mult'])}</span>
+</div>
+<h4 style="margin-top:2rem; margin-bottom:0.75rem;">🧠 AI Recruiter Reasoning</h4>
+<div class="reasoning-box">
+{cand_score_row['reasoning']}
+</div>
+</div>""", unsafe_allow_html=True)
                     
         with tab4:
             st.markdown("### 🛡️ Integrity & Fraud Detection Audit")
-            st.markdown(textwrap.dedent(f"""
-            <div class="info-card" style="border-left: 5px solid #ef4444; background-color: {card_bg}; margin-bottom: 1.5rem;">
-                <h4 style="margin-top:0; color: #ef4444; font-family: Outfit;">System Integrity Verification Summary</h4>
-                <p style="color: {text_muted}; margin-bottom: 0.75rem;">
-                    The ranking engine executes 5 strict data consistency checkers on candidate history to filter out inflated or fake profiles.
-                    Flagged profiles are immediately quarantine-listed with a fit score of <b>0.00</b>.
-                </p>
-                <div style="font-size: 1.15rem; font-weight: 700; color: #ef4444;">
-                    ⚠️ {len(honeypots_df)} Honeypots Quarantined and Filtered Out
-                </div>
-            </div>
-            """), unsafe_allow_html=True)
+            st.markdown(f"""<div class="info-card" style="border-left: 5px solid #ef4444; background-color: {card_bg}; margin-bottom: 1.5rem;">
+<h4 style="margin-top:0; color: #ef4444; font-family: Outfit;">System Integrity Verification Summary</h4>
+<p style="color: {text_muted}; margin-bottom: 0.75rem;">
+The ranking engine executes 5 strict data consistency checkers on candidate history to filter out inflated or fake profiles.
+Flagged profiles are immediately quarantine-listed with a fit score of <b>0.00</b>.
+</p>
+<div style="font-size: 1.15rem; font-weight: 700; color: #ef4444;">
+⚠️ {len(honeypots_df)} Honeypots Quarantined and Filtered Out
+</div>
+</div>""", unsafe_allow_html=True)
             
             if len(honeypots_df) > 0:
                 st.dataframe(
@@ -939,31 +928,28 @@ def main():
         """, unsafe_allow_html=True)
         
         if precomputed:
-            st.markdown(textwrap.dedent(f"""
-            <div class="info-card" style="border-color: {border_color};">
-                <h3 style="margin-top:0; font-family: Outfit; font-weight: 700;">🛡️ Cascade Ranking Architecture Blueprint</h3>
-                <p style="color: {text_muted}; margin-bottom: 1.5rem;">The ranking sandbox runs the following pipeline layers to identify and rank candidate matches:</p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
-                    <div class="metric-card" style="padding: 1.2rem; background: {card_bg};">
-                        <h5 style="margin-top: 0; color: #ef4444; font-family: Outfit; font-weight: 700;">1. Integrity Scan</h5>
-                        <p style="font-size: 0.8rem; color: {text_muted}; margin: 0; line-height: 1.4;">Checks for date anomalies, skill duration fabrication, and job overlap fraud. Flags and removes candidates instantly.</p>
-                    </div>
-                    <div class="metric-card" style="padding: 1.2rem; background: {card_bg};">
-                        <h5 style="margin-top: 0; color: #3b82f6; font-family: Outfit; font-weight: 700;">2. Dense Retrieval</h5>
-                        <p style="font-size: 0.8rem; color: {text_muted}; margin: 0; line-height: 1.4;">Computes semantic cosine similarity of title, summary, and skills against JD using local <code>all-MiniLM-L6-v2</code>.</p>
-                    </div>
-                    <div class="metric-card" style="padding: 1.2rem; background: {card_bg};">
-                        <h5 style="margin-top: 0; color: #22c55e; font-family: Outfit; font-weight: 700;">3. Multipliers & Penalties</h5>
-                        <p style="font-size: 0.8rem; color: {text_muted}; margin: 0; line-height: 1.4;">Adjusts candidate ranks using experience, stability, notice period availability, and specific domain-fit indicators.</p>
-                    </div>
-                    <div class="metric-card" style="padding: 1.2rem; background: {card_bg};">
-                        <h5 style="margin-top: 0; color: #a855f7; font-family: Outfit; font-weight: 700;">4. Factual Reasoning</h5>
-                        <p style="font-size: 0.8rem; color: {text_muted}; margin: 0; line-height: 1.4;">Formulates natural, non-templated summaries of experience and fit metrics to justify final candidate rank.</p>
-                    </div>
-                </div>
-            </div>
-            """), unsafe_allow_html=True)
+            st.markdown(f"""<div class="info-card" style="border-color: {border_color};">
+<h3 style="margin-top:0; font-family: Outfit; font-weight: 700;">🛡️ Cascade Ranking Architecture Blueprint</h3>
+<p style="color: {text_muted}; margin-bottom: 1.5rem;">The ranking sandbox runs the following pipeline layers to identify and rank candidate matches:</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
+<div class="metric-card" style="padding: 1.2rem; background: {card_bg};">
+<h5 style="margin-top: 0; color: #ef4444; font-family: Outfit; font-weight: 700;">1. Integrity Scan</h5>
+<p style="font-size: 0.8rem; color: {text_muted}; margin: 0; line-height: 1.4;">Checks for date anomalies, skill duration fabrication, and job overlap fraud. Flags and removes candidates instantly.</p>
+</div>
+<div class="metric-card" style="padding: 1.2rem; background: {card_bg};">
+<h5 style="margin-top: 0; color: #3b82f6; font-family: Outfit; font-weight: 700;">2. Dense Retrieval</h5>
+<p style="font-size: 0.8rem; color: {text_muted}; margin: 0; line-height: 1.4;">Computes semantic cosine similarity of title, summary, and skills against JD using local <code>all-MiniLM-L6-v2</code>.</p>
+</div>
+<div class="metric-card" style="padding: 1.2rem; background: {card_bg};">
+<h5 style="margin-top: 0; color: #22c55e; font-family: Outfit; font-weight: 700;">3. Multipliers & Penalties</h5>
+<p style="font-size: 0.8rem; color: {text_muted}; margin: 0; line-height: 1.4;">Adjusts candidate ranks using experience, stability, notice period availability, and specific domain-fit indicators.</p>
+</div>
+<div class="metric-card" style="padding: 1.2rem; background: {card_bg};">
+<h5 style="margin-top: 0; color: #a855f7; font-family: Outfit; font-weight: 700;">4. Factual Reasoning</h5>
+<p style="font-size: 0.8rem; color: {text_muted}; margin: 0; line-height: 1.4;">Formulates natural, non-templated summaries of experience and fit metrics to justify final candidate rank.</p>
+</div>
+</div>
+</div>""", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
