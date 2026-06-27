@@ -3,6 +3,7 @@ import json
 import gzip
 import pickle
 import base64
+import textwrap
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -826,7 +827,7 @@ def main():
                 
                 col1, col2 = st.columns([1, 1])
                 with col1:
-                    st.markdown(f"""
+                    st.markdown(textwrap.dedent(f"""
                     <div class="info-card">
                         <h3 style="margin-top:0;">👤 {cand_info['profile']['anonymized_name']}</h3>
                         <p style="font-size:1.15rem; font-style:italic; color:{text_muted}; margin-bottom: 1.25rem;">{cand_info['profile']['headline']}</p>
@@ -845,10 +846,10 @@ def main():
                             {skills_html}
                         </div>
                     </div>
-                    """, unsafe_allow_html=True)
+                    """), unsafe_allow_html=True)
                     
                 with col2:
-                    st.markdown(f"""
+                    st.markdown(textwrap.dedent(f"""
                     <div class="info-card">
                         <h3 style="margin-top:0;">⚡ Scoring Cascade Breakdown</h3>
                         
@@ -895,11 +896,11 @@ def main():
                             {cand_score_row['reasoning']}
                         </div>
                     </div>
-                    """, unsafe_allow_html=True)
+                    """), unsafe_allow_html=True)
                     
         with tab4:
             st.markdown("### 🛡️ Integrity & Fraud Detection Audit")
-            st.markdown(f"""
+            st.markdown(textwrap.dedent(f"""
             <div class="info-card" style="border-left: 5px solid #ef4444; background-color: {card_bg}; margin-bottom: 1.5rem;">
                 <h4 style="margin-top:0; color: #ef4444; font-family: Outfit;">System Integrity Verification Summary</h4>
                 <p style="color: {text_muted}; margin-bottom: 0.75rem;">
@@ -910,7 +911,7 @@ def main():
                     ⚠️ {len(honeypots_df)} Honeypots Quarantined and Filtered Out
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """), unsafe_allow_html=True)
             
             if len(honeypots_df) > 0:
                 st.dataframe(
@@ -938,7 +939,7 @@ def main():
         """, unsafe_allow_html=True)
         
         if precomputed:
-            st.markdown(f"""
+            st.markdown(textwrap.dedent(f"""
             <div class="info-card" style="border-color: {border_color};">
                 <h3 style="margin-top:0; font-family: Outfit; font-weight: 700;">🛡️ Cascade Ranking Architecture Blueprint</h3>
                 <p style="color: {text_muted}; margin-bottom: 1.5rem;">The ranking sandbox runs the following pipeline layers to identify and rank candidate matches:</p>
@@ -962,7 +963,7 @@ def main():
                     </div>
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """), unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
