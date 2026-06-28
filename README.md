@@ -3,7 +3,7 @@
 This repository contains the production implementation of the Candidate Ranking Engine designed to find and rank the top 100 candidate profiles from a 100,000 candidate pool (`candidates.jsonl`) for a **"Senior AI Engineer — Founding Team"** role at Redrob AI.
 
 The engine completes the entire scoring, filtering, ranking, and reasoning compilation in **under 14 seconds** on a standard CPU with **0% honeypot rate** in the shortlist (100% compliant with submission spec rules).
-
+ 
 ---
 
 ## 🏆 System Architecture: Multi-Stage Cascade Ranking
